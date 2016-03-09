@@ -14,15 +14,15 @@ import (
 )
 
 func main() {
-	pipe := flag.Bool("pipe", false, "Read URI string from stdout")
 	dry := flag.Bool("dry", false, "Just output parsed words")
-	uri := flag.String("uri", "mysql://root@localhost?reconnect=true", "MySQL URI")
+	uri := flag.String("uri", "", "MySQL URI")
 	flag.Parse()
 
 	v := *uri
-	if *pipe {
+	if v == "" {
 		buf, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
+			log.Fatalln(err)
 			return
 		}
 		v = string(buf)
